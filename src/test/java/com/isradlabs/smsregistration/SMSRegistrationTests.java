@@ -8,7 +8,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import org.junit.Ignore;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -23,8 +23,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.isradlabs.smsregistration.model.dto.ApplicationFormRelationsDTO;
+import com.isradlabs.sms.model.dto.applicationform.ApplicationFormStudentDTO;
+
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @AutoConfigureRestDocs(outputDir = "target/generated-snippets")
 @SpringBootTest
@@ -33,7 +35,7 @@ class SMSRegistrationTests {
   private WebApplicationContext context;
 
   private MockMvc mockMvc;
-  ApplicationFormRelationsDTO  applicationFormDTO=null;
+  ApplicationFormStudentDTO  applicationFormDTO=null;
   @BeforeEach
   public void setUp(WebApplicationContext webApplicationContext,
       RestDocumentationContextProvider restDocumentation) {
@@ -52,7 +54,7 @@ class SMSRegistrationTests {
   @Test
 
   public void testSubmitApplicationForm() throws Exception {
-    applicationFormDTO.setAgreement(true);
+    applicationFormDTO.setAgreement("YES");
       String applicationFormDTOJson=new ObjectMapper().writeValueAsString(applicationFormDTO);
       System.out.println("applicationFormDTOJson:"+applicationFormDTOJson.toString());
       mockMvc.perform(post("/v1/applicationForm/submitApplicationForm")
@@ -69,7 +71,7 @@ class SMSRegistrationTests {
   @Test
 
   public void testSubmitApplicationFormNoAgreement() throws Exception {
-    applicationFormDTO.setAgreement(true);
+    applicationFormDTO.setAgreement("YES");
       String applicationFormDTOJson=new ObjectMapper().writeValueAsString(applicationFormDTO);
       mockMvc.perform(post("/v1/applicationForm/submitApplicationForm")
               .content(applicationFormDTOJson)
@@ -84,9 +86,9 @@ class SMSRegistrationTests {
   @Test
   void contextLoads() {}
 
-  private ApplicationFormRelationsDTO getApplicationFormDTO() {
-    ApplicationFormRelationsDTO applicationFormDTO=new ApplicationFormRelationsDTO();
-    applicationFormDTO.setAgreement(true); 
+  private ApplicationFormStudentDTO getApplicationFormDTO() {
+	  ApplicationFormStudentDTO applicationFormDTO=new ApplicationFormStudentDTO();
+    applicationFormDTO.setAgreement("YES"); 
     return applicationFormDTO;
   }
 }

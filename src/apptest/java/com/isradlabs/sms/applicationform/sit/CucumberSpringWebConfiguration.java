@@ -3,6 +3,9 @@ package com.isradlabs.sms.applicationform.sit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+
+import com.isradlabs.sms.applicationform.sit.config.CucumberSpringContextConfig;
+
 import io.cucumber.spring.CucumberContextConfiguration;
 
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

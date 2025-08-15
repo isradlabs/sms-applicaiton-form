@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.isradlabs.sms</groupId>
-	<artifactId>sms-application-form</artifactId>
+	<artifactId>applicationform</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>sms-application-form</name>
+	<name>sms-applicationform</name>
 	<description>SMS - Application Form</description>
 
 
@@ -190,7 +190,14 @@
 	</dependencies>
 
 	<build>
-		
+		<testResources>
+			<testResource>
+				<directory>${project.basedir}/src/apptest</directory>
+				<filtering>true</filtering>
+			</testResource>
+			
+		</testResources>
+		<testSourceDirectory>${project.basedir}/src/apptest</testSourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

@@ -1,4 +1,4 @@
-package com.isradlabs.sms.applicationform.sit;
+package com.isradlabs.sms.applicationform.sit.config;
 
 
 
