@@ -27,68 +27,62 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.isradlabs.sms.model.dto.applicationform.ApplicationFormStudentDTO;
 
-@ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
+@ExtendWith({ RestDocumentationExtension.class, SpringExtension.class })
 @AutoConfigureRestDocs(outputDir = "target/generated-snippets")
 @SpringBootTest
 class SMSRegistrationTests {
-  @Autowired
-  private WebApplicationContext context;
+	@Autowired
+	private WebApplicationContext context;
 
-  private MockMvc mockMvc;
-  ApplicationFormStudentDTO  applicationFormDTO=null;
-  @BeforeEach
-  public void setUp(WebApplicationContext webApplicationContext,
-      RestDocumentationContextProvider restDocumentation) {
+	private MockMvc mockMvc;
+	ApplicationFormStudentDTO applicationFormStudentDTO = null;
 
-    this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-        .apply(documentationConfiguration(restDocumentation)).build();
+	@BeforeEach
+	public void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
 
-    applicationFormDTO =  getApplicationFormDTO();
-        /*Stream.of(
-        getApplicationFormDTO())
-        .collect(Collectors.toList());
-        */
-  }
-  // @Ignore Junit 4 
-  @Disabled ("Need more Time to fix") //Junit 5
-  @Test
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+				.apply(documentationConfiguration(restDocumentation)).build();
 
-  public void testSubmitApplicationForm() throws Exception {
-    applicationFormDTO.setAgreement("YES");
-      String applicationFormDTOJson=new ObjectMapper().writeValueAsString(applicationFormDTO);
-      System.out.println("applicationFormDTOJson:"+applicationFormDTOJson.toString());
-      mockMvc.perform(post("/v1/applicationForm/submitApplicationForm")
-              .content(applicationFormDTOJson)
-              .contentType("application/json")).andDo(print())
-              .andExpect(status().isOk())
-              .andExpect(MockMvcResultMatchers.content().json(applicationFormDTOJson))
-              .andDo(document("{methodName}",
-                      preprocessRequest(prettyPrint()),
-                      preprocessResponse(prettyPrint())));
-  }
-  //@Ignore -Junit 4
-  @Disabled ("Need more Time to fix")
-  @Test
+		applicationFormStudentDTO = getApplicationFormDTO();
+		/*
+		 * Stream.of( getApplicationFormDTO()) .collect(Collectors.toList());
+		 */
+	}
 
-  public void testSubmitApplicationFormNoAgreement() throws Exception {
-    applicationFormDTO.setAgreement("YES");
-      String applicationFormDTOJson=new ObjectMapper().writeValueAsString(applicationFormDTO);
-      mockMvc.perform(post("/v1/applicationForm/submitApplicationForm")
-              .content(applicationFormDTOJson)
-              .contentType("application/json")).andDo(print())
-              .andExpect(status().isOk())
-              .andExpect(MockMvcResultMatchers.content().json(applicationFormDTOJson))
-              .andDo(document("{methodName}",
-                      preprocessRequest(prettyPrint()),
-                      preprocessResponse(prettyPrint())));
-  }
-  
-  @Test
-  void contextLoads() {}
+	// @Ignore Junit 4
+	@Disabled("Need more Time to fix") // Junit 5
+	@Test
 
-  private ApplicationFormStudentDTO getApplicationFormDTO() {
-	  ApplicationFormStudentDTO applicationFormDTO=new ApplicationFormStudentDTO();
-    applicationFormDTO.setAgreement("YES"); 
-    return applicationFormDTO;
-  }
+	public void testSubmitApplicationForm() throws Exception {
+		applicationFormStudentDTO.setAgreement("YES");
+		String applicationFormDTOJson = new ObjectMapper().writeValueAsString(applicationFormStudentDTO);
+		System.out.println("applicationFormDTOJson:" + applicationFormDTOJson.toString());
+		mockMvc.perform(post("/v1/applicationForm/submitApplicationForm").content(applicationFormDTOJson)
+				.contentType("application/json")).andDo(print()).andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.content().json(applicationFormDTOJson))
+				.andDo(document("{methodName}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())));
+	}
+
+	// @Ignore -Junit 4
+	@Disabled("Need more Time to fix")
+	@Test
+
+	public void testSubmitApplicationFormNoAgreement() throws Exception {
+		applicationFormStudentDTO.setAgreement("YES");
+		String applicationFormDTOJson = new ObjectMapper().writeValueAsString(applicationFormStudentDTO);
+		mockMvc.perform(post("/v1/applicationForm/submitApplicationForm").content(applicationFormDTOJson)
+				.contentType("application/json")).andDo(print()).andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.content().json(applicationFormDTOJson))
+				.andDo(document("{methodName}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())));
+	}
+
+	@Test
+	void contextLoads() {
+	}
+
+	private ApplicationFormStudentDTO getApplicationFormDTO() {
+		ApplicationFormStudentDTO applicationFormDTO = new ApplicationFormStudentDTO();
+		applicationFormDTO.setAgreement("YES");
+		return applicationFormDTO;
+	}
 }
